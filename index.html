@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi Translate</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+  <div id="app" class="max-w-xl w-full bg-white shadow-lg rounded-lg p-6">
+    <h1 class="text-2xl font-bold mb-4 text-center">Multi Translate</h1>
+    <div class="mb-4">
+      <label class="block text-gray-700">Source Language:</label>
+      <select v-model="sourceLang" class="mt-1 block w-full border-gray-300 rounded-md" :disabled="loading">
+        <option v-for="(name, code) in languages" :value="code">{{ name }}</option>
+      </select>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700">Target Language:</label>
+      <select v-model="targetLang" class="mt-1 block w-full border-gray-300 rounded-md" :disabled="loading">
+        <option v-for="(name, code) in languages" :value="code">{{ name }}</option>
+      </select>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700">Text:</label>
+      <textarea v-model="text" rows="4" class="mt-1 block w-full border-gray-300 rounded-md" :disabled="loading"></textarea>
+    </div>
+    <button @click="translate" class="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700" :disabled="loading">
+      {{ loading ? 'Translating...' : 'Translate' }}
+    </button>
+    <div v-if="translated" class="mt-4">
+      <label class="block text-gray-700">Translation:</label>
+      <pre class="mt-1 p-2 bg-gray-100 rounded-md whitespace-pre-wrap">{{ translated }}</pre>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
