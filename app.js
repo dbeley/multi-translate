@@ -10,9 +10,9 @@ import('./config.js')
       data() {
         return {
           text: '',
-          sourceLang: 'en',
-          targetLang: 'es',
-          translated: '',
+          sourceLang: 'fr',
+          targetLangs: ['en'],
+          translations: {},
           loading: false,
           languages: {
             en: 'English',
@@ -27,25 +27,32 @@ import('./config.js')
       },
       methods: {
         async translate() {
-          if (!this.text.trim()) return;
+          if (!this.text.trim() || this.targetLangs.length === 0) return;
           this.loading = true;
-          this.translated = '';
+          this.translations = {};
           try {
-            const params = new URLSearchParams();
-            if (config.API_KEY) params.append('auth_key', config.API_KEY);
-            params.append('text', this.text);
-            if (this.sourceLang) params.append('source_lang', this.sourceLang.toUpperCase());
-            params.append('target_lang', this.targetLang.toUpperCase());
+            const promises = this.targetLangs.map(async lang => {
+              const params = new URLSearchParams();
+              if (config.API_KEY) params.append('auth_key', config.API_KEY);
+              params.append('text', this.text);
+              if (this.sourceLang) params.append('source_lang', this.sourceLang.toUpperCase());
+              params.append('target_lang', lang.toUpperCase());
 
-            const response = await fetch(`${config.API_URL}/translate`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-              },
-              body: params.toString(),
+              const response = await fetch(`${config.API_URL}/translate`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: params.toString(),
+              });
+              const data = await response.json();
+              return { lang, text: data.translations?.[0]?.text || '' };
             });
-            const data = await response.json();
-            this.translated = data.translations?.[0]?.text || '';
+
+            const results = await Promise.all(promises);
+            results.forEach(r => {
+              this.translations[r.lang] = r.text;
+            });
           } catch (err) {
             console.error(err);
             alert('Translation failed.');
