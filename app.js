@@ -1,12 +1,6 @@
 const { createApp } = Vue;
 
-// Load config safely
-import('./config.js')
-  .catch(() => import('./config.sample.js'))
-  .then(module => {
-    const config = module.default;
-
-    createApp({
+createApp({
       data() {
         return {
           text: '',
@@ -99,14 +93,13 @@ import('./config.js')
           try {
             const promises = this.targetLangs.map(async lang => {
               const params = new URLSearchParams();
-              if (config.API_KEY) params.append('auth_key', config.API_KEY);
               params.append('text', this.text);
               if (this.sourceLang && this.sourceLang !== 'auto') {
                 params.append('source_lang', this.sourceLang.toUpperCase());
               }
               params.append('target_lang', lang.toUpperCase());
 
-              const response = await fetch(`${config.API_URL}/translate`, {
+              const response = await fetch('/translate', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/x-www-form-urlencoded',
@@ -206,4 +199,3 @@ import('./config.js')
         },
       },
     }).mount('#app');
-  });
