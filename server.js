@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
 const API_URL = process.env.API_URL || 'https://api-free.deepl.com/v2';
 const SERVER_API_KEY = process.env.API_KEY || '';
@@ -8,6 +9,11 @@ const app = express();
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static(path.join(__dirname)));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 app.post('/translate', async (req, res) => {
   const { text, source_lang, target_lang, auth_key } = req.body;
