@@ -12,6 +12,7 @@ import('./config.js')
           text: '',
           sourceLang: 'fr',
           targetLangs: ['en'],
+          selectedLang: 'en',
           translations: {},
           loading: false,
           sourceLanguages: {
@@ -119,6 +120,12 @@ import('./config.js')
 
         clearTargets() {
           this.targetLangs = [];
+        },
+
+        addTarget() {
+          if (this.selectedLang && !this.targetLangs.includes(this.selectedLang)) {
+            this.targetLangs.push(this.selectedLang);
+          }
         },
       },
     }).mount('#app');

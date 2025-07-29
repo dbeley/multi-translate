@@ -26,11 +26,16 @@
           {{ languages[code] }}
         </span>
       </div>
-      <select v-model="targetLangs" multiple size="8" class="mt-1 block w-full border-gray-300 rounded-md" :disabled="loading">
-        <option v-for="(name, code) in languages" :key="code" :value="code">
-          {{ name }}
-        </option>
-      </select>
+      <div class="flex items-center mt-1">
+        <select v-model="selectedLang" class="block w-full border-gray-300 rounded-md" :disabled="loading">
+          <option v-for="(name, code) in languages" :key="code" :value="code">
+            {{ name }}
+          </option>
+        </select>
+        <button @click="addTarget" class="ml-2 px-3 py-1 bg-blue-600 text-white rounded" :disabled="loading || targetLangs.includes(selectedLang)">
+          Add
+        </button>
+      </div>
     </div>
     <div class="mb-4">
       <label class="block text-gray-700">Text:</label>
