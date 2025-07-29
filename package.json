@@ -4,7 +4,7 @@
   "description": "A simple client-side translation app built with Vue 3 and Tailwind CSS. It now uses the [DeepL](https://www.deepl.com/) API for translations.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node tests/smoke.js",
     "start": "node server.js"
   },
   "keywords": [],

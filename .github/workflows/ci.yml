@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      API_KEY: ${{ secrets.DEEPL_API_KEY }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm ci
+      - run: npm test
+      - name: Build Docker image
+        run: docker build -t multi-translate .
+      - name: Run container for smoke test
+        run: |
+          docker run -d --name app -e API_KEY=$API_KEY -p 3000:3000 multi-translate
+          sleep 5
+          docker ps -a
+          docker logs app
+          docker rm -f app

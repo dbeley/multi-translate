@@ -23,6 +23,23 @@ included.
    ```
    The server listens on port `3000` by default and forwards requests to DeepL.
 
+### Docker
+
+You can also run the server using Docker:
+
+```bash
+docker build -t multi-translate .
+docker run -p 3000:3000 -e API_KEY=your-key multi-translate
+```
+
+### GitHub Actions
+
+This repository includes a workflow at `.github/workflows/ci.yml` which
+automatically installs dependencies, runs the (minimal) test suite and builds a
+Docker image on every push or pull request. Set the `DEEPL_API_KEY` repository
+secret with your DeepL authentication key so the workflow can start the server
+for a smoke test.
+
 3. Open `index.html` in your browser.
 
 ## Security Notes
