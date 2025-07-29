@@ -16,6 +16,7 @@ import('./config.js')
           translations: {},
           loading: false,
           darkMode: false,
+          toastVisible: false,
           sourceLanguages: {
             auto: 'Auto-Detect',
             bg: 'Bulgarian',
@@ -141,7 +142,14 @@ import('./config.js')
         },
 
         copyTranslation(text) {
-          navigator.clipboard.writeText(text).catch(err => console.error(err));
+          navigator.clipboard.writeText(text)
+            .then(() => {
+              this.toastVisible = true;
+              setTimeout(() => {
+                this.toastVisible = false;
+              }, 1000);
+            })
+            .catch(err => console.error(err));
         },
 
         saveState() {
