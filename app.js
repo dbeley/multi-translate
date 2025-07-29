@@ -15,6 +15,7 @@ import('./config.js')
           selectedLang: 'en',
           translations: {},
           loading: false,
+          darkMode: false,
           sourceLanguages: {
             auto: 'Auto-Detect',
             bg: 'Bulgarian',
@@ -129,6 +130,54 @@ import('./config.js')
           if (this.selectedLang && !this.targetLangs.includes(this.selectedLang)) {
             this.targetLangs.push(this.selectedLang);
           }
+        },
+
+        toggleDarkMode() {
+          this.darkMode = !this.darkMode;
+        },
+
+        removeTarget(code) {
+          this.targetLangs = this.targetLangs.filter(l => l !== code);
+        },
+
+        copyTranslation(text) {
+          navigator.clipboard.writeText(text).catch(err => console.error(err));
+        },
+
+        saveState() {
+          const state = {
+            text: this.text,
+            sourceLang: this.sourceLang,
+            targetLangs: this.targetLangs,
+            selectedLang: this.selectedLang,
+            darkMode: this.darkMode,
+          };
+          localStorage.setItem('multi-translate-state', JSON.stringify(state));
+        },
+      },
+
+      created() {
+        const saved = localStorage.getItem('multi-translate-state');
+        if (saved) {
+          try {
+            const state = JSON.parse(saved);
+            this.text = state.text || this.text;
+            this.sourceLang = state.sourceLang || this.sourceLang;
+            this.targetLangs = state.targetLangs || this.targetLangs;
+            this.selectedLang = state.selectedLang || this.selectedLang;
+            this.darkMode = state.darkMode ?? this.darkMode;
+          } catch (_) {}
+        }
+      },
+
+      watch: {
+        text: 'saveState',
+        sourceLang: 'saveState',
+        selectedLang: 'saveState',
+        darkMode: 'saveState',
+        targetLangs: {
+          handler: 'saveState',
+          deep: true,
         },
       },
     }).mount('#app');
