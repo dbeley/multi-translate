@@ -31,21 +31,21 @@ import('./config.js')
           this.loading = true;
           this.translated = '';
           try {
+            const params = new URLSearchParams();
+            if (config.API_KEY) params.append('auth_key', config.API_KEY);
+            params.append('text', this.text);
+            if (this.sourceLang) params.append('source_lang', this.sourceLang.toUpperCase());
+            params.append('target_lang', this.targetLang.toUpperCase());
+
             const response = await fetch(`${config.API_URL}/translate`, {
               method: 'POST',
               headers: {
-                'Content-Type': 'application/json',
-                ...(config.API_KEY ? { 'Authorization': `Bearer ${config.API_KEY}` } : {}),
+                'Content-Type': 'application/x-www-form-urlencoded',
               },
-              body: JSON.stringify({
-                q: this.text,
-                source: this.sourceLang,
-                target: this.targetLang,
-                format: 'text',
-              }),
+              body: params.toString(),
             });
             const data = await response.json();
-            this.translated = data.translatedText || data.data?.translations?.[0]?.translatedText || '';
+            this.translated = data.translations?.[0]?.text || '';
           } catch (err) {
             console.error(err);
             alert('Translation failed.');
