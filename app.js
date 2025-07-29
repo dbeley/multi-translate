@@ -85,6 +85,10 @@ import('./config.js')
             this.loading = false;
           }
         },
+
+        clearTargets() {
+          this.targetLangs = [];
+        },
       },
     }).mount('#app');
   });
