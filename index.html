@@ -10,9 +10,9 @@
 </head>
   <body id="app" class="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center p-4">
   <div class="max-w-xl w-full bg-white dark:bg-gray-800 dark:text-gray-100 shadow-lg rounded-lg p-6">
-    <h1 class="text-2xl font-bold mb-2 text-center">Multi Translate</h1>
+    <h1 class="text-3xl font-extrabold mb-4 text-center text-blue-600 dark:text-blue-400 drop-shadow">Multi Translate</h1>
     <div class="flex justify-end mb-2">
-      <button @click="toggleDarkMode" class="text-sm text-blue-600 dark:text-blue-400 hover:underline" :disabled="loading">
+      <button @click="toggleDarkMode" class="text-sm text-blue-600 dark:text-blue-400 hover:underline border border-blue-600 dark:border-blue-400 rounded px-2 py-1" :disabled="loading">
         {{ darkMode ? 'Light Mode' : 'Dark Mode' }}
       </button>
     </div>
@@ -25,10 +25,10 @@
     <div class="mb-4">
       <div class="flex items-center justify-between">
         <label class="block text-gray-700 dark:text-gray-300">Target Languages:</label>
-        <button @click="clearTargets" class="text-xs text-blue-600 dark:text-blue-400 hover:underline" :disabled="loading || !targetLangs.length">Clear</button>
+        <button @click="clearTargets" class="text-xs text-blue-600 dark:text-blue-400 hover:underline border border-blue-600 dark:border-blue-400 rounded px-2 py-1" :disabled="loading || !targetLangs.length">Clear</button>
       </div>
       <div class="flex flex-wrap gap-2 my-2" v-if="targetLangs.length">
-        <span v-for="code in targetLangs" :key="code" class="flex items-center px-2 py-1 bg-blue-600 text-white rounded">
+        <span v-for="code in targetLangs" :key="code" class="flex items-center px-3 py-2 bg-blue-600 text-white rounded shadow-sm">
           {{ languages[code] }}
           <button @click="removeTarget(code)" class="ml-1 text-xs hover:text-gray-200" :disabled="loading">&times;</button>
         </span>
@@ -47,7 +47,7 @@
     </div>
     <div class="mb-4">
       <label class="block text-gray-700 dark:text-gray-300">Text:</label>
-      <textarea v-model="text" rows="4" class="mt-1 block w-full border-2 border-blue-500 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100" :disabled="loading" placeholder="Enter text to translate"></textarea>
+      <textarea v-model="text" rows="4" class="mt-1 block w-full border-2 border-blue-500 rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100 p-2" :disabled="loading" placeholder="Enter text to translate"></textarea>
     </div>
     <button @click="translate" class="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700" :disabled="loading">
       {{ loading ? 'Translating...' : 'Translate' }}
@@ -55,12 +55,12 @@
       <div v-if="Object.keys(translations).length" class="mt-4">
         <label class="block text-gray-700 dark:text-gray-300 mb-2">Translations:</label>
         <ul>
-          <li v-for="(text, code) in translations" class="mb-2">
-            <div class="flex justify-between items-center">
-              <strong>{{ languages[code] }}:</strong>
-              <button @click="copyTranslation(text)" class="text-xs text-blue-600 dark:text-blue-400 hover:underline">Copy</button>
+          <li v-for="(text, code) in translations" class="mb-2 p-3 border border-gray-300 dark:border-gray-600 rounded shadow-sm bg-white dark:bg-gray-800">
+            <div class="flex justify-between items-center mb-1">
+              <strong class="font-semibold">{{ languages[code] }}:</strong>
+              <button @click="copyTranslation(text)" class="text-xs text-blue-600 dark:text-blue-400 hover:underline border border-blue-600 dark:border-blue-400 rounded px-2 py-0.5">Copy</button>
             </div>
-            <pre class="mt-1 p-2 bg-gray-100 dark:bg-gray-700 dark:text-gray-100 rounded-md whitespace-pre-wrap inline-block w-full">{{ text }}</pre>
+            <pre class="p-2 bg-gray-100 dark:bg-gray-700 dark:text-gray-100 rounded whitespace-pre-wrap inline-block w-full">{{ text }}</pre>
           </li>
         </ul>
       </div>
