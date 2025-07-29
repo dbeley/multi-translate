@@ -7,7 +7,9 @@ included.
 
 ## Setup
 
-1. Copy `config.sample.js` to `config.js` and add your DeepL authentication key:
+1. Copy `config.sample.js` to `config.js` and add your DeepL authentication key
+   (optional, the server can also use an `API_KEY` environment variable):
+
    ```bash
    cp config.sample.js config.js
    # edit config.js
