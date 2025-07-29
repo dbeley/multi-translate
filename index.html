@@ -13,7 +13,7 @@
     <div class="mb-4">
       <label class="block text-gray-700">Source Language:</label>
       <select v-model="sourceLang" class="mt-1 block w-full border-gray-300 rounded-md" :disabled="loading">
-        <option v-for="(name, code) in languages" :value="code">{{ name }}</option>
+        <option v-for="(name, code) in sourceLanguages" :value="code">{{ name }}</option>
       </select>
     </div>
     <div class="mb-4">
