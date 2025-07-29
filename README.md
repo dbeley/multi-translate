@@ -17,14 +17,22 @@ paste any text without choosing a language first.
    ```
    `API_URL` already points to the local proxy server (`http://localhost:3000`).
 
-2. Install dependencies and start the server:
+2. Create a `.env` file (or export variables in your shell) to provide your
+   DeepL API configuration:
+
+   ```bash
+   echo "API_KEY=your_key" > .env
+   echo "API_URL=https://api-free.deepl.com/v2" >> .env
+   ```
+
+3. Install dependencies and start the server:
    ```bash
    npm install
    node server.js
    ```
    The server listens on port `3000` by default and forwards requests to DeepL.
 
-3. Open `index.html` in your browser.
+4. Open `index.html` in your browser.
 
 ## Security Notes
 
