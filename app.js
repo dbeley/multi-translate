@@ -16,6 +16,8 @@ import('./config.js')
           translations: {},
           loading: false,
           darkMode: false,
+          targetLangError: '',
+          toastVisible: false,
           sourceLanguages: {
             auto: 'Auto-Detect',
             bg: 'Bulgarian',
@@ -86,7 +88,12 @@ import('./config.js')
       },
       methods: {
         async translate() {
-          if (!this.text.trim() || this.targetLangs.length === 0) return;
+          if (!this.text.trim()) return;
+          if (this.targetLangs.length === 0) {
+            this.targetLangError = 'Please select at least one target language.';
+            return;
+          }
+          this.targetLangError = '';
           this.loading = true;
           this.translations = {};
           try {
@@ -124,11 +131,13 @@ import('./config.js')
 
         clearTargets() {
           this.targetLangs = [];
+          this.targetLangError = '';
         },
 
        addTarget() {
          if (this.selectedLang && !this.targetLangs.includes(this.selectedLang)) {
            this.targetLangs.push(this.selectedLang);
+           this.targetLangError = '';
          }
        },
 
@@ -146,7 +155,14 @@ import('./config.js')
         },
 
         copyTranslation(text) {
-          navigator.clipboard.writeText(text).catch(err => console.error(err));
+          navigator.clipboard.writeText(text)
+            .then(() => {
+              this.toastVisible = true;
+              setTimeout(() => {
+                this.toastVisible = false;
+              }, 1000);
+            })
+            .catch(err => console.error(err));
         },
 
         saveState() {
