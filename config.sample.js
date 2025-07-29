@@ -1,7 +1,8 @@
 export default {
-  // Base URL for the DeepL API. Change to `https://api.deepl.com/v2` if you
-  // have a paid account.
-  API_URL: 'https://api-free.deepl.com/v2',
-  // Your DeepL authentication key. Required for requests.
+  // URL for the local proxy server. The proxy forwards requests to the DeepL
+  // API so browser CORS restrictions are avoided.
+  API_URL: 'http://localhost:3000',
+  // Your DeepL authentication key. Can be left blank if you start the server
+  // with the `API_KEY` environment variable set.
   API_KEY: '',
 };
