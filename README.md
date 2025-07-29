@@ -1,10 +1,11 @@
 # Multi Translate
 
-A simple client-side translation app built with Vue 3 and Tailwind CSS. It now
-uses the [DeepL](https://www.deepl.com/) API for translations. Direct calls to
+A simple client-side translation app built with Vue 3 and Tailwind CSS. It uses the [DeepL](https://www.deepl.com/) API for translations. Direct calls to
 DeepL from the browser are blocked by CORS, so a small Node.js proxy server is
 included. The source language is set to **Auto‑Detect** by default so you can
 paste any text without choosing a language first.
+
+![screenshot](imgs/screenshot.png)
 
 ## Setup
 
@@ -19,13 +20,12 @@ paste any text without choosing a language first.
 2. Install dependencies and start the server:
    ```bash
    npm install
-   node server.js
+   npm start
    ```
    The server listens on port `3000` by default and forwards requests to DeepL.
 
-3. Open `index.html` in your browser.
+3. Open `http://localhost:3000` in your browser.
 
 ## Security Notes
 
 The `.env` file is ignored by git so that your API key stays out of version control. Keep the file private if you include sensitive credentials.
-
