@@ -7,4 +7,14 @@ services:
     environment:
       - API_KEY=${API_KEY:-}
       - API_URL=${API_URL:-https://api-free.deepl.com/v2}
+    labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.multi-translate.entrypoints=secure"
+        - "traefik.http.routers.multi-translate.rule=Host(`multi-translate.$DOMAIN`)"
+        - "traefik.http.services.multi-translate.loadbalancer.server.port=3000"
+        - "traefik.http.routers.multi-translate.tls.certresolver=le"
 
+networks:
+    default:
+        name: $DEFAULT_NETWORK
+        external: true
