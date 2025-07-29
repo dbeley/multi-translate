@@ -3,7 +3,8 @@
 A simple client-side translation app built with Vue 3 and Tailwind CSS. It now
 uses the [DeepL](https://www.deepl.com/) API for translations. Direct calls to
 DeepL from the browser are blocked by CORS, so a small Node.js proxy server is
-included.
+included. The source language is set to **Auto‑Detect** by default so you can
+paste any text without choosing a language first.
 
 ## Setup
 

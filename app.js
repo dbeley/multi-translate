@@ -10,12 +10,13 @@ import('./config.js')
       data() {
         return {
           text: '',
-          sourceLang: 'fr',
+          sourceLang: 'auto',
           targetLangs: ['en'],
           selectedLang: 'en',
           translations: {},
           loading: false,
           sourceLanguages: {
+            auto: 'Auto-Detect',
             bg: 'Bulgarian',
             cs: 'Czech',
             da: 'Danish',
@@ -92,7 +93,9 @@ import('./config.js')
               const params = new URLSearchParams();
               if (config.API_KEY) params.append('auth_key', config.API_KEY);
               params.append('text', this.text);
-              if (this.sourceLang) params.append('source_lang', this.sourceLang.toUpperCase());
+              if (this.sourceLang && this.sourceLang !== 'auto') {
+                params.append('source_lang', this.sourceLang.toUpperCase());
+              }
               params.append('target_lang', lang.toUpperCase());
 
               const response = await fetch(`${config.API_URL}/translate`, {
