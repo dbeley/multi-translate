@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+require('dotenv').config();
 
 const API_URL = process.env.API_URL || 'https://api-free.deepl.com/v2';
 const SERVER_API_KEY = process.env.API_KEY || '';
