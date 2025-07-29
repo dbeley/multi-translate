@@ -134,15 +134,20 @@ import('./config.js')
           this.targetLangError = '';
         },
 
-        addTarget() {
-          if (this.selectedLang && !this.targetLangs.includes(this.selectedLang)) {
-            this.targetLangs.push(this.selectedLang);
-            this.targetLangError = '';
-          }
+       addTarget() {
+         if (this.selectedLang && !this.targetLangs.includes(this.selectedLang)) {
+           this.targetLangs.push(this.selectedLang);
+           this.targetLangError = '';
+         }
+       },
+
+        applyDarkMode() {
+          document.documentElement.classList.toggle('dark', this.darkMode);
         },
 
         toggleDarkMode() {
           this.darkMode = !this.darkMode;
+          this.applyDarkMode();
         },
 
         removeTarget(code) {
@@ -184,13 +189,17 @@ import('./config.js')
             this.darkMode = state.darkMode ?? this.darkMode;
           } catch (_) {}
         }
+        this.applyDarkMode();
       },
 
       watch: {
         text: 'saveState',
         sourceLang: 'saveState',
         selectedLang: 'saveState',
-        darkMode: 'saveState',
+        darkMode() {
+          this.saveState();
+          this.applyDarkMode();
+        },
         targetLangs: {
           handler: 'saveState',
           deep: true,
