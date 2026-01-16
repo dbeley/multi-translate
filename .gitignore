@@ -2,3 +2,5 @@ node_modules/
 .DS_Store
 .direnv
 .env
+result
+flake.lock
